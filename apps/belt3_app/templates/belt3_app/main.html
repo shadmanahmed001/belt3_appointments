@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Main Page</title>
+</head>
+<body>
+		<h1>Registration</h1>
+		<form action="/register" method="post">
+		{% csrf_token %}
+			First Name: <input type="text" name="name">
+			Last Name: <input type="text" name="last">
+			Email: <input type="text" name="email">
+			Password: <input type="password" name="password">
+			*password should be at least 8 characters <br>
+			Confirm Password: <input type="password" name="confirm_password">
+			<input type="submit" name="submit" value="Register">
+		</form>
+
+
+		<!-- <ul class="messages"> -->
+
+    {% for message in messages %}
+    <p{% if message.tags  == 'info' %} class="{{ message.tags }}" id="messages">{{ message }}{% endif %}</p>
+    {% endfor %}
+
+
+
+
+		<h1>Login</h1>
+		<form action="/login" method="post">
+		{% csrf_token %}
+			Email: <input type="text" name="email">
+			Password: <input type="text" name="password">
+			<input type="submit" name="submit" value="Login">
+		</form>
+    {% for message in messages %}
+
+	    <p{% if message.tags == 'error' %} class="{{ message.tags }}" id="messages">{{ message }}{% endif %}</p>
+    {% endfor %}
+
+</body>
+</html>

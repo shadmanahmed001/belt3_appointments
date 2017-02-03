@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Appointments Page</title>
+    <style>
+    /*h3{
+      display: inline-block;
+    }*/
+    </style>
+  </head>
+  <body>
+    <h1>Hello, {{request.session.name}}!</h1>
+    <a href="/logout">Logout</a>
+    <h2>Here are all your appointments for today!</h2>
+
+<table>
+  <tr>
+    <th>Task</th>
+    <th>Status</th>
+    <th>Time</th>
+    <th>Action</th>
+  </tr>
+  {%for element in appointments.all %}
+  <tr>
+    <td>{{element.task}}</td>
+    <td>{{element.status}}</td>
+    <td>{{element.date}}</td>
+    <td>{{element.time}}</td>
+    <td><a href="/edit/{{element.id}}">Edit</a></td>
+    <td><a href="/delete/{{element.id}}">Delete</a></td>
+
+  </tr>
+  {% endfor %}
+</table>
+<form action="/adder" method="post">
+  {% csrf_token %}
+  <h3>Tasks:</h3>
+  <input type="text" name="task" placeholder="Enter your task here!">
+  <h3>Status:</h3>
+  <select class="select" name="status">
+    <option value="Done">Done</option>
+    <option value="Pending">Pending</option>
+    <option value="Missed">Missed</option>
+  </select>
+
+  <h4>Enter a date after 2017-02-03:</h4>
+<input type="date" name="date" min="2017-02-03"><br>
+  <h3>Time:</h3>
+  <input type="time" name="time">
+  <input type="submit" value="Update">
+</form>
+{% for message in messages %}
+<p{% if message.tags  == 'info' %} class="{{ message.tags }}" id="messages">{{ message }}{% endif %}</p>
+{% endfor %}
+  </body>
+</html>
